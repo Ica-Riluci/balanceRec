@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'recorder.apps.RecorderConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # enable cross-site requriement
-    'server',
     'corsheaders'
 ]
 
@@ -120,7 +120,7 @@ USE_TZ = True
 
 # enable cross-site requriement
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = ('localhost:3000')
+CORS_ORIGIN_WHITELIST = ('http://127.0.0.1:3000',)
 
 CORS_ALLOW_METHODS = (
     'DELETE',
