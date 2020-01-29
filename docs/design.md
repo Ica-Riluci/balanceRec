@@ -10,7 +10,7 @@
 
 ## To-do List
 
-- [ ] Design and implement model of balance record *!!Requirement survey needed*.
+- [x] Design and implement model of balance record *!!Requirement survey needed*.
 
 ## Design
 
