@@ -11,7 +11,8 @@
 ## To-do List
 
 - [x] Design and implement model of balance record *!!Requirement survey needed*.
-- [ ] Add record backend API
+- [x] Add record backend API
+- [x] Add record frontend
 
 ## Design
 

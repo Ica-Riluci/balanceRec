@@ -120,19 +120,18 @@ USE_TZ = True
 
 # enable cross-site requriement
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_WHITELIST = ('http://127.0.0.1:3000',)
+CORS_ORIGIN_ALLOW_ALL = True
 
-CORS_ALLOW_METHODS = (
+CORS_ALLOW_METHODS = [
     'DELETE',
     'GET',
-    'OPTION',
+    'OPTIONS',
     'PATCH',
     'POST',
     'PUT',
-    'VIEW'
-)
+]
 
-CORS_ALLOW_HEADERS = (
+CORS_ALLOW_HEADERS = [
     'accept',
     'accept-encoding',
     'authorization',
@@ -141,8 +140,8 @@ CORS_ALLOW_HEADERS = (
     'origin',
     'user-agent',
     'x-csrftoken',
-    'x-requested-with'
-)
+    'x-requested-with',
+]
 
 
 # Static files (CSS, JavaScript, Images)
