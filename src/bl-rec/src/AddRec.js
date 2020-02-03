@@ -1,5 +1,6 @@
 import 'date-fns';
 import { format } from 'date-fns';
+import { styled } from '@material-ui/core/styles';
 import React from 'react';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -12,6 +13,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
+import Container from '@material-ui/core/Container';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 
 import axios from 'axios';
@@ -86,64 +88,72 @@ export default class AddRec extends React.Component{
 
     render() {
         return (
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <Grid container justify='space-around'>
-                    <KeyboardDatePicker
-                        disableToolbar
-                        variant='inline'
-                        format='yyyy-MM-dd'
-                        margin='normal'
-                        id='date-picker-inline'
-                        label='选择生效日期'
-                        value={this.state.sel_date}
-                        onChange={this.handleDateChange}
-                        KeyboardButtonProps={{
-                            'aria-label': 'change date',
-                        }}
-                    />
-                    <FormControl>
-                        <InputLabel id='rec-type-label'>费用类型</InputLabel>
-                        <Select
-                            label-id='rec-type-label'
-                            id='rec-type'
-                            value={this.state.rec_type}
-                            onChange={this.setRecType}
-                        >
-                            <MenuItem value={1}>管理费用</MenuItem>
-                            <MenuItem value={2}>其他费用</MenuItem>
-                        </Select>
-                    </FormControl>
-                    <FormControl>
-                        <InputLabel id='dis-type-label'>分摊类型</InputLabel>
-                        <Select
-                            label-id='dis-type-label'
-                            id='dis-type'
-                            value={this.state.dis_type}
-                            onChange={this.setDisType}
-                        >
-                            <MenuItem value={1}>仅23号大院</MenuItem>
-                            <MenuItem value={2}>仅175</MenuItem>
-                            <MenuItem value={3}>23号大院与175(1:2)</MenuItem>
-                        </Select>
-                    </FormControl>
-                    <FormControl>
-                        <InputLabel htmlFor="income">收入</InputLabel>
-                        <Input
-                            id="income"
-                            value={this.state.inc}
-                            onChange={this.setIncome}
-                            startAdornment={<InputAdornment position="start">¥</InputAdornment>}
+            <div>
+                <Grid container>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <KeyboardDatePicker
+                            disableToolbar
+                            variant='inline'
+                            format='yyyy-MM-dd'
+                            margin='normal'
+                            id='date-picker-inline'
+                            label='选择生效日期'
+                            value={this.state.sel_date}
+                            onChange={this.handleDateChange}
+                            KeyboardButtonProps={{
+                                'aria-label': 'change date',
+                            }}
                         />
-                    </FormControl>
-                    <FormControl>
-                        <InputLabel htmlFor="output">支出</InputLabel>
-                        <Input
-                            id="output"
-                            value={this.state.out}
-                            onChange={this.setOutput}
-                            startAdornment={<InputAdornment position="start">¥</InputAdornment>}
-                        />
-                    </FormControl>
+                    </MuiPickersUtilsProvider>
+                </Grid>
+                <Grid container>
+                    <Grid container direction='row' spacing={2}>
+                        <Grid item><FormControl>
+                            <InputLabel id='rec-type-label'>费用类型</InputLabel>
+                            <Select
+                                label-id='rec-type-label'
+                                id='rec-type'
+                                value={this.state.rec_type}
+                                onChange={this.setRecType}
+                            >
+                                <MenuItem value={1}>管理费用</MenuItem>
+                                <MenuItem value={2}>其他费用</MenuItem>
+                            </Select>
+                        </FormControl></Grid>
+                        <Grid item><FormControl>
+                            <InputLabel id='dis-type-label'>分摊类型</InputLabel>
+                            <Select
+                                label-id='dis-type-label'
+                                id='dis-type'
+                                value={this.state.dis_type}
+                                onChange={this.setDisType}
+                            >
+                                <MenuItem value={1}>仅23号大院</MenuItem>
+                                <MenuItem value={2}>仅175</MenuItem>
+                                <MenuItem value={3}>23号大院与175(1:2)</MenuItem>
+                            </Select>
+                        </FormControl></Grid>
+                        <Grid item><FormControl>
+                            <InputLabel htmlFor="income">收入</InputLabel>
+                            <Input
+                                id="income"
+                                value={this.state.inc}
+                                onChange={this.setIncome}
+                                startAdornment={<InputAdornment position="start">¥</InputAdornment>}
+                            />
+                        </FormControl></Grid>
+                        <Grid item><FormControl>
+                            <InputLabel htmlFor="output">支出</InputLabel>
+                            <Input
+                                id="output"
+                                value={this.state.out}
+                                onChange={this.setOutput}
+                                startAdornment={<InputAdornment position="start">¥</InputAdornment>}
+                            />
+                        </FormControl></Grid>
+                    </Grid>
+                </Grid>
+                <div style={{marginTop : '1em'}}><Grid container>
                     <TextField
                         id="detail"
                         label="备注"
@@ -153,9 +163,11 @@ export default class AddRec extends React.Component{
                         onChange={this.setDetail}
                         variant="outlined"
                     />
-                    <Button variant="contained" color="primary" onClick={this.handleSubmit}>提交新的记录</Button>
-                </Grid>
-            </MuiPickersUtilsProvider>
+                </Grid></div>
+                <div style={{marginTop : '1em'}}>
+                    <Grid container><Button variant="contained" color="primary" onClick={this.handleSubmit}>提交新的记录</Button></Grid>
+                </div>
+            </div>
         );
     }
 };
