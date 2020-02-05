@@ -12,7 +12,7 @@ class AddRec(generic.View):
         data = json.loads(request.body)
         print(data)
         create_date = datetime.strptime(data['datex'], '%Y-%m-%d')
-        new_rec = BalRec(datex=create_date, recType=data['type'], disType=data['dist'], income=data['inc'], output=data['out'], detail=data['detail'])
+        new_rec = BalRec(datex=create_date, recType=data['type'], disType=data['dist'], income=data['inc'], output=data['out'], detail=data['detail'], abstract=data['abst'])
         new_rec.save()
         return HttpResponse('hello')
 
@@ -26,13 +26,14 @@ class QueryRec(generic.View):
         resp = []
         for rec in rlist:
             resp.append({
-                'datex' : rec.datex,
+                'datex' : rec.datex.strftime('%Y-%m-%d'),
                 'rtype' : rec.recType,
                 'dtype' : rec.disType,
                 'inc' : rec.income,
                 'out' : rec.output,
                 'detail' : rec.detail,
-                'pk' : rec.id
+                'pk' : rec.id,
+                'abst' : rec.abstract
             })
         res = {
             'valid' : True,

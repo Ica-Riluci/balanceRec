@@ -13,6 +13,7 @@
 - [x] Design and implement model of balance record *!!Requirement survey needed*.
 - [x] Add record backend API
 - [x] Add record frontend
+- [x] Design `add record` frontend UI and Implement
 
 ## Design
 
@@ -32,3 +33,7 @@
 - **outcome** *float*
   **INTEGRITY REQUIREMENT** there could only and must be a zero between `income` and `outcome`
 - **detail** *string(255)*
+
+### UI
+
+Using expansion panel.

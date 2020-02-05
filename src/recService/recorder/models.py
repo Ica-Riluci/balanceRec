@@ -9,3 +9,4 @@ class BalRec(models.Model):
     income = models.FloatField()
     output = models.FloatField()
     detail = models.CharField(max_length=255)
+    abstract = models.CharField(max_length=100)

@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import AddRec from './AddRec';
+import QueryRec from './QueryRec';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -19,6 +20,17 @@ function App() {
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>
           <AddRec />
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+      <ExpansionPanel>
+        <ExpansionPanelSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls='panel1a-content'
+          id='query-rec'>
+            查询账目
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails>
+          <QueryRec />
         </ExpansionPanelDetails>
       </ExpansionPanel>
     </div>

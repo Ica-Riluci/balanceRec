@@ -15,11 +15,28 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import Container from '@material-ui/core/Container';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import PropTypes from 'prop-types';
 
 import axios from 'axios';
+import { Dialog, DialogTitle } from '@material-ui/core';
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
+
+function OKDialog(props) {
+    const { onClose, open } = props;
+
+    return (
+        <Dialog onClose={onClose} aria-labelledby='dia-title' open={open}>
+            <DialogTitle id='dia-title'>添加成功</DialogTitle>
+        </Dialog>
+    );
+}
+
+OKDialog.propTypes = {
+    onClose : PropTypes.func.isRequired,
+    open : PropTypes.bool.isRequired
+}
 
 export default class AddRec extends React.Component{
     constructor(props) {
@@ -29,10 +46,24 @@ export default class AddRec extends React.Component{
             sel_date : today,
             rec_type : 1,
             dis_type : 3,
+            abst : '',
             inc : 0.0,
             out : 0.0,
-            detail : ''
+            detail : '',
+            open : false
         };
+    }
+
+    handleInsertSucc = () => {
+        const today = new Date();
+        this.setState({
+            sel_date : today,
+            abst : '',
+            inc : 0.0,
+            out : 0.0,
+            detail : '',
+            open : false
+        });
     }
 
     handleDateChange = (date) => {
@@ -65,6 +96,12 @@ export default class AddRec extends React.Component{
         });
     }
 
+    setAbstract = (e) => {
+        this.setState({
+            abst : e.target.value
+        });
+    }
+
     setDisType = (e) => {
         this.setState({
             dis_type : e.target.value
@@ -75,14 +112,18 @@ export default class AddRec extends React.Component{
         console.log(format(this.state.sel_date, 'yyyy-MM-dd'));
         var data = {
             datex : format(this.state.sel_date, 'yyyy-MM-dd'),
+            abst : this.state.abst,
             type : this.state.rec_type,
             dist : this.state.dis_type,
             inc : this.state.inc,
             out : this.state.out,
-            detail : this.state.detail   
+            detail : this.state.detail
         };
         axios.post('http://127.0.0.1:8000/rec/add/', data).then(resp => {
             console.log(resp);
+            this.setState({
+                open : true
+            })
         });
     }
 
@@ -108,6 +149,13 @@ export default class AddRec extends React.Component{
                 </Grid>
                 <Grid container>
                     <Grid container direction='row' spacing={2}>
+                        <Grid item><TextField
+                            id="abstract"
+                            label="摘要"
+                            value={this.state.abst}
+                            onChange={this.setAbstract}
+                            variant="outlined"
+                        /></Grid>
                         <Grid item><FormControl>
                             <InputLabel id='rec-type-label'>费用类型</InputLabel>
                             <Select
@@ -167,6 +215,7 @@ export default class AddRec extends React.Component{
                 <div style={{marginTop : '1em'}}>
                     <Grid container><Button variant="contained" color="primary" onClick={this.handleSubmit}>提交新的记录</Button></Grid>
                 </div>
+                <OKDialog open={this.state.open} onClose={this.handleInsertSucc} />
             </div>
         );
     }
