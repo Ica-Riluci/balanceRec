@@ -17,10 +17,27 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import axios from 'axios';
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
+
+function OKDialog(props) {
+    const { onClose, open } = props;
+
+    return (
+        <Dialog onClose={onClose} aria-labelledby='dia-title' open={open}>
+            <DialogTitle id='dia-title'>保存成功</DialogTitle>
+        </Dialog>
+    );
+}
+
+OKDialog.propTypes = {
+    onClose : PropTypes.func.isRequired,
+    open : PropTypes.bool.isRequired
+}
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -85,7 +102,8 @@ export default class QueryRec extends React.Component {
             rlim : today,
             tabv : 0,
             rows : [[],[],[]],
-            res : [0, 0, 0]
+            res : [0, 0, 0],
+            open : false
         }
     }
 
@@ -180,6 +198,20 @@ export default class QueryRec extends React.Component {
         );
     }
 
+    saveTable = (e) => {
+        axios.post('http://127.0.0.1:8000/rec/save/', { data : this.state.rows }).then(resp=>{
+            this.setState({
+                open : true
+            });
+        });
+    }
+
+    handleSaveSucc = () => {
+        this.setState({
+            open : false
+        });
+    }
+
     render() {
         var cont = this.createTable(this.state.tabv);
         return (
@@ -215,7 +247,8 @@ export default class QueryRec extends React.Component {
                             /></Grid>
                         </Grid>
                     </MuiPickersUtilsProvider>
-                    <Button variant="contained" color="primary" onClick={this.handleQuery}>查询</Button>
+                    <Grid item><Button variant="contained" color="primary" onClick={this.handleQuery}>查询</Button></Grid>
+                    <Grid item><Button variant="contained" color="secondary" onClick={this.saveTable}>保存</Button></Grid>
                 </Grid>
                 <Divider />
                 <Typography variant="h6" gutterBottom>总计： ¥ {this.state.res[this.state.tabv]} 元</Typography>
@@ -231,6 +264,7 @@ export default class QueryRec extends React.Component {
                     <TabPanel value={this.state.tabv} index={1}>{ cont }</TabPanel>
                     <TabPanel value={this.state.tabv} index={2}>{ cont }</TabPanel>
                 </Box>
+                <OKDialog open={this.state.open} onClose={this.handleSaveSucc} />
             </div>
         );
     }
