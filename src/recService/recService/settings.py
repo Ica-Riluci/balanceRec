@@ -148,3 +148,5 @@ CORS_ALLOW_HEADERS = [
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOCAL_ADD = '/Users/icariluci/'

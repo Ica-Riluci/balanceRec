@@ -212,6 +212,8 @@ export default class QueryRec extends React.Component {
         });
     }
 
+    getSelected = () => {}
+
     render() {
         var cont = this.createTable(this.state.tabv);
         return (
